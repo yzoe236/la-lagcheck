@@ -1,3 +1,7 @@
+# Unreleased
+
+- Reconfigure command-line stdout and stderr as UTF-8 while preserving their error handlers, so Unicode output remains printable without breaking argparse errors for undecodable POSIX arguments.
+
 # LA-LagCheck 0.8.0
 
 This release restricts provisional output, accepts the tolerance as a distance along the scan, and states more in the report and in the documents. The reference correlation core, the block-lag fit, the fourteen diagnostic checks, their thresholds, the statuses and the exit codes are unchanged. A verified corrected log is written under the same conditions as in 0.7.0. The eligibility described below restricts provisional output only: it does not withhold a supported result from the verified path, and a verified log still requires the read-back of the written file to pass.

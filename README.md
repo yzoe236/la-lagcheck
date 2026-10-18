@@ -4,7 +4,7 @@ LA-LagCheck estimates laser/MS time-coordinate drift from block lags, checks whe
 
 ## Run it once
 
-Run these four commands from this package directory, the folder that holds this file. Use the same Python interpreter for all of them, and use Python 3.12: the pinned versions in `requirements-reference.txt` were validated with Python 3.12.5 and have no prebuilt packages for Python 3.13 or later. With another Python version, install `requirements.txt` instead; it gives version ranges, and not every combination in them was tested. Keep `-X utf8` in every command. The program prints µ and superscript characters. When the output is redirected or piped on Windows without `-X utf8`, the last line can fail to print in the local code page, and the run then ends with exit code 1 although its output files are complete.
+Run these four commands from this package directory, the folder that holds this file. Use the same Python interpreter for all of them, and use Python 3.12: the pinned versions in `requirements-reference.txt` were validated with Python 3.12.5 and have no prebuilt packages for Python 3.13 or later. With another Python version, install `requirements.txt` instead; it gives version ranges, and not every combination in them was tested. Keep `-X utf8` in every command so Python and test-runner output use UTF-8. The command-line entry point also reconfigures standard output and error to UTF-8 at startup, so the program can print µ and superscript characters when output is redirected or piped on Windows under a legacy code page.
 
 ```text
 python -X utf8 -m pip install -r requirements-reference.txt
@@ -17,7 +17,7 @@ What each command should show:
 
 1. `pip` installs the pinned reference versions of NumPy, pandas, SciPy and matplotlib, and pytest for the tests. Its output contains a line that starts with `Successfully installed` followed by the package names, or `Requirement already satisfied` lines if they are present already. pip may add a notice about a newer pip version, which can be ignored. `requirements-lock.txt` lists every package of the environment in which this release was validated, with its indirect dependencies. It is a record and is not needed for installation.
 2. The version number in the title of this file.
-3. A last line that contains `339 passed, 1 skipped`. The same line counts 14 warnings in the reference environment; they come from matplotlib and are expected. The run took about three minutes on the development computer. The skipped test needs an optional private fixture that is not distributed.
+3. A last line that contains `341 passed, 1 skipped`. The same line counts 14 warnings in the reference environment; they come from matplotlib and are expected. The run took about three minutes on the development computer. The skipped test needs an optional private fixture that is not distributed.
 4. `"status": "verified"` and an empty `differences` list. The script compares the files with the hashes recorded in `FILES.json`.
 
 The tests create their temporary folders in the system temporary directory. `-B` and `-p no:cacheprovider` stop Python and pytest from writing cache folders into the package directory.
@@ -78,4 +78,4 @@ New Wave line/spot logs and conditional short-record analysis are described in [
 
 The optional iolite-compatible ESL export preserves coordinate, laser-state, speed and other non-attribution cells. When required, it explicitly writes inherited sample/sequence attribution into blank metadata cells, with a source-record audit. Zero-duration On/Off pairs already excluded by the source analysis may be omitted from the compatible CSV; their complete original rows are saved in `excluded_zero_duration_records.json`, without assigning positive durations. This compatibility conversion is distinct from the canonical timestamp-only export. Receiving-application GUI import remains untested.
 
-See [CHANGELOG.md](CHANGELOG.md) for the 0.8.0, 0.7.0, 0.6.0 and 0.5.0 changes and their validation scope. The input-processing record schema retains its 0.4.0 identifier; it is distinct from the package version. The grating numerical expectations are unchanged. Its packaged-input hashes were updated after removal of the local instrument-path header.
+See [CHANGELOG.md](CHANGELOG.md) for the unreleased changes and for the 0.8.0, 0.7.0, 0.6.0 and 0.5.0 changes and their validation scope. The input-processing record schema retains its 0.4.0 identifier; it is distinct from the package version. The grating numerical expectations are unchanged. Its packaged-input hashes were updated after removal of the local instrument-path header.

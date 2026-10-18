@@ -1304,6 +1304,7 @@ def run(config_path, output, export=False, export_mode=None, ms_first_sample_tim
 
 
 def main(argv=None):
+    _configure_utf8_stdio()
     parser = argparse.ArgumentParser(description='LA-LagCheck: per-acquisition laser/MS lag rate, checks and verified corrected log')
     parser.add_argument('--version', action='version', version=__version__)
     sub = parser.add_subparsers(dest='command', required=True)
@@ -1419,3 +1420,15 @@ def main(argv=None):
     except Exception as exc:
         print(json.dumps({'status':'tool_error','type':type(exc).__name__,'error':str(exc)}, ensure_ascii=False), file=sys.stderr)
         return 1
+
+
+def _configure_utf8_stdio() -> None:
+    """Use UTF-8 for console output even when the active code page cannot encode it."""
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, 'reconfigure', None)
+        if callable(reconfigure):
+            errors = getattr(stream, 'errors', None)
+            if errors is None:
+                reconfigure(encoding='utf-8')
+            else:
+                reconfigure(encoding='utf-8', errors=errors)
